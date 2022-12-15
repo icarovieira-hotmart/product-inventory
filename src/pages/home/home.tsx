@@ -1,7 +1,9 @@
+import CategoryList from '../../modules/categoryList';
+
 const Home = () => {
   return (
     <>
-      List of categories here
+      <CategoryList />
     </>
   )
 }
