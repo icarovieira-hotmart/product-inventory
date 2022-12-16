@@ -1,8 +1,30 @@
-import { Grid, Typography } from '@mui/material';
 
+import { useEffect, useState } from "react"
+import { Grid, Typography } from '@mui/material'
+import { useQuery } from '@apollo/client'
+
+import { LOAD_CATEGORIES } from 'src/graphql/queries'
 import CategoryListItem from './components/categoryListItem'
 
+
 const CategoryList = () => {
+  const { error, loading, data } = useQuery(LOAD_CATEGORIES)
+  const [categories, setCategories] = useState<any[]>([])
+  useEffect(() => {
+    if (data) {
+      console.log(data.allCategories)
+      setCategories(data.allCategories)
+    }
+  }, [data]);
+
+  if(error){
+    return <>Sorry, There was an error to fetch data</>
+  }
+
+  if(loading){
+    return <>Loading...</>
+  }
+
   return (
     <>
      <Typography sx={{ mt: 5 }} variant="h2" gutterBottom>
@@ -10,9 +32,12 @@ const CategoryList = () => {
       </Typography>
 
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {Array.from(Array(6)).map((_, index) => (
+        {categories.map((category, index) => (
           <Grid item xs={2} sm={4} md={4} key={index}>
-            <CategoryListItem />
+            <CategoryListItem
+              id={category.id}
+              name={category.name}
+              description={category.description}/>
           </Grid>
         ))}
       </Grid>
