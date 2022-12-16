@@ -1,7 +1,6 @@
-import React from 'react';
 import Container from '@mui/material/Container';
 
-import RoutesApp from './routes';
+import RoutesApp from './routes/routes';
 
 import './App.css';
 
