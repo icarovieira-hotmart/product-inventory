@@ -1,7 +1,9 @@
+import ProductList from 'src/modules/productList'
+
 const Category = () => {
   return (
     <>
-      List of producst from that category here
+      <ProductList />
     </>
   )
 }

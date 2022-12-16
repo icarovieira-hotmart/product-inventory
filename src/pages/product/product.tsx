@@ -1,7 +1,9 @@
+import ProductDetail from 'src/modules/productDetails'
+
 const Product = () => {
   return (
     <>
-      Product Details Here
+      <ProductDetail />
     </>
   )
 }
