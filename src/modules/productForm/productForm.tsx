@@ -1,6 +1,93 @@
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { useMutation } from '@apollo/client'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Box,Button, FormControl, TextField, Typography } from '@mui/material'
+
+import { CREATE_PRODUCT } from './queries'
+import getSchema from './schema'
+import { FormValues } from './types'
+
 const ProductForm = () => {
+  const navigate = useNavigate()
+  const { id } = useParams()
+
+  const schema = getSchema()
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    mode: 'onBlur'
+  });
+
+  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT);
+
+  const onSubmit: SubmitHandler<FormValues> = async data => {
+    console.log(data)
+
+    await createProduct({
+      variables: {
+        ...data
+      }
+    })
+
+    if(!error) {
+      console.log('Product created')
+      navigate(`/category/${id}`)
+    }
+  }
+
   return (
-    <>Form Here</>
+    <>
+      <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
+        Add Product
+      </Typography>
+      <Box 
+        component="form" 
+        noValidate 
+        autoComplete="off" 
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{'& .MuiTextField-root': { m: 1 }}}
+      >
+        <FormControl fullWidth>
+          <input type="number" hidden defaultValue={id} {...register('category_id')}/>
+          <TextField
+            required
+            label="Name"
+            {...register('name')}
+            helperText={errors.name?.message} 
+          />
+          <TextField
+            required
+            label="Description"
+            {...register('description')}
+            helperText={errors.description?.message}
+          />
+          <TextField
+            helperText={errors.color?.message}
+            required
+            label="Color"
+            {...register('color')}
+          />
+          <TextField
+            type="number"
+            required
+            label="Stock"
+            {...register('stock')}
+            helperText={errors.stock?.message}
+          />
+          <TextField
+            type="number"
+            required
+            label="Price"
+            {...register('price')}
+            helperText={errors.price?.message}
+          />
+        </FormControl>
+
+        <Button sx={{ mt: 2 }} variant="contained" type="submit">
+          Submit
+        </Button>
+      </Box>
+    </>
   )
 }
 

@@ -52,7 +52,7 @@ const ProductList = () => {
           <ListItem 
             disablePadding 
             key={`product-${index}`}
-            onClick={() => navigate(`/product/${id}`)}
+            onClick={() => navigate(`/product/${product.id}`)}
           >
             <ListItemButton>
               <ListItemText primary={product.name}/>
@@ -66,7 +66,7 @@ const ProductList = () => {
       <Button 
         sx={{ mt: 2 }}
         variant="contained"
-        onClick={() => navigate('/category/product/add')}
+        onClick={() => navigate(`/category/${id}/product/add`)}
       >
         Add Product
       </Button>
