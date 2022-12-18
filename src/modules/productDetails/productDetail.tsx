@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useMutation } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
@@ -35,13 +34,12 @@ const ProductDetail = () => {
     }],
   })
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   const handleIncreaseStock = async () => {
     await updateProduct({
-      variables: { updateProductId: productId, stock: data.Product.stock + 1 },
+      variables: {
+        updateProductId: productId,
+        stock: data.Product.stock + 1 
+      },
     })
 
     refetch()
@@ -50,7 +48,10 @@ const ProductDetail = () => {
   const handleDecreaseStock = async () => {
     if(data.Product.stock !== 0) {
       await updateProduct({
-        variables: { updateProductId: productId, stock: data.Product.stock - 1 },
+        variables: {
+          updateProductId: productId,
+          stock: data.Product.stock - 1
+        },
       })
   
       refetch()

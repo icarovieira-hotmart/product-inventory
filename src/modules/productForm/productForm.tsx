@@ -28,7 +28,9 @@ const ProductForm = () => {
     mode: 'onBlur'
   });
 
-  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT, {
+  const [createProduct, { 
+    loading, error 
+  }] = useMutation(CREATE_PRODUCT, {
     refetchQueries: [{
       query: LOAD_CATEGORY,
       variables: {
@@ -45,7 +47,6 @@ const ProductForm = () => {
     })
 
     if(!error) {
-      console.log('Product created')
       navigate(`/category/${categoryId}`)
     }
   }
@@ -57,7 +58,7 @@ const ProductForm = () => {
           aria-label="back"
           color="primary"
           component="label"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(`/category/${categoryId}`)}
         >
           <ArrowBackIcon />
         </IconButton>

@@ -7,7 +7,7 @@ const getSchema = () => {
       description: string().required('Please fill the description'),
       color: string().required('Please fill the color'),
       stock: number()
-        .positive()
+        .moreThan(-1)
         .integer('Stock must be an integer')
         .required('Please fill the stock')
         .typeError('Stock must be a number'),

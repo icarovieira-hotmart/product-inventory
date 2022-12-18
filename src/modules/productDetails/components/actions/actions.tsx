@@ -37,6 +37,7 @@ const Actions = ({
       <IconButton
         aria-label="decrease"
         color="primary"
+        disabled={stock === 0}
         component="label"
         onClick={() => handleDecreaseStock()}
       >

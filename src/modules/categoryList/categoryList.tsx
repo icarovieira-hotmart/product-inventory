@@ -12,7 +12,6 @@ const CategoryList = () => {
   const [categories, setCategories] = useState<any[]>([])
   useEffect(() => {
     if (data) {
-      console.log(data.allCategories)
       setCategories(data.allCategories)
     }
   }, [data]);

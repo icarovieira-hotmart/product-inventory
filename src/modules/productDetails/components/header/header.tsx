@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { IconButton, Stack, Typography } from '@mui/material'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -8,6 +8,7 @@ interface IProps {
 }
 
 const Header = ({name}: IProps) => {
+  const { categoryId } = useParams()
   const navigate = useNavigate()
 
   return (
@@ -21,7 +22,7 @@ const Header = ({name}: IProps) => {
         aria-label="back"
         color="primary"
         component="label"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(`/category/${categoryId}`)}
       >
         <ArrowBackIcon />
       </IconButton>

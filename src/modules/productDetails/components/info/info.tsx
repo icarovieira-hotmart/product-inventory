@@ -15,7 +15,7 @@ const Info = ({description, color, price}: IProps) => {
   const Item = ({label, value}: Item) => {
     return (
       <Typography sx={{ textAlign: 'left'}} variant="body1" gutterBottom>
-        {label}: {value}
+        <b>{label}</b>: {value}
       </Typography>
     )
   }

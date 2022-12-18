@@ -16,7 +16,7 @@ const Header = ({ name, description }: IProps) => {
           aria-label="back"
           color="primary"
           component="label"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
         >
           <ArrowBackIcon />
         </IconButton>
