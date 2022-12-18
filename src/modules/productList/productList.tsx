@@ -4,13 +4,13 @@ import { useQuery } from '@apollo/client'
 import { 
   Button,
   Divider,
-  Typography,
   List,
   ListItem,
   ListItemButton,
   ListItemText } from '@mui/material'
 
 import { LOAD_CATEGORY } from 'src/graphql/queries'
+import Header from './components/header'
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -21,6 +21,7 @@ const ProductList = () => {
       id: categoryId
     }
   })
+
   const [products, setProducts] = useState<any[]>([])
   useEffect(() => {
     if (data) {
@@ -38,12 +39,10 @@ const ProductList = () => {
 
   return (
     <>
-      <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
-        Category: {data.Category.name}
-      </Typography>
-      <Typography sx={{ mt: 5 }} variant="body1" gutterBottom>
-        {data.Category.description}
-      </Typography>
+      <Header
+        name={data.Category.name}
+        description={data.Category.description}
+      />
 
       <Divider sx={{ mt: 2 }} />
 

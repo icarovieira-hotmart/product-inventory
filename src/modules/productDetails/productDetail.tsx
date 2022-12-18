@@ -2,13 +2,11 @@ import { useEffect } from "react"
 import { useMutation } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { Button, IconButton, Stack, Typography } from '@mui/material'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 
 import { LOAD_CATEGORY } from 'src/graphql/queries'
 import { LOAD_PRODUCT_DETAILS } from './queries'
 import { UPDATE_PRODUCT, REMOVE_PRODUCT } from './mutations'
+import { Header, Info, Actions } from './components'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -78,52 +76,20 @@ const ProductDetail = () => {
 
   return (
     <>
-      <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
-        Name:{data.Product.name}
-      </Typography>
-      <Typography sx={{ textAlign: 'left'}} variant="body1" gutterBottom>
-        Description:{data.Product.description}
-      </Typography>
-      <Typography sx={{ textAlign: 'left'}} variant="body1" gutterBottom>
-        Color:{data.Product.color}
-      </Typography>
-      <Typography sx={{ textAlign: 'left'}} variant="body1" gutterBottom>
-        Price: {data.Product.price}
-      </Typography>
-
-      <Stack direction="row" spacing={2}>
-        <IconButton 
-          aria-label="increase"
-          color="primary"
-          component="label"
-          onClick={() => handleIncreaseStock()}
-        >
-          <AddCircleOutlineIcon />
-        </IconButton>
-
-        <Typography sx={{ textAlign: 'left'}} variant="overline">
-          Stock: {updateLoading ? 'Loading...' : data.Product.stock}
-        </Typography>
-
-        <IconButton
-          aria-label="decrease"
-          color="primary"
-          component="label"
-          onClick={() => handleDecreaseStock()}
-        >
-          <RemoveCircleOutlineIcon />
-        </IconButton>
-
-        <Button
-          sx={{ mt: 2 }}
-          disabled={removeLoading}
-          variant="contained"
-          color="error"
-          onClick={() => handleRemoveProduct()}
-        >
-          {removeLoading ? 'Loading...' : 'Remove'}
-        </Button>
-      </Stack>
+      <Header name={data.Product.name}/>
+      <Info
+        description={data.Product.description}
+        color={data.Product.color}
+        price={data.Product.price}
+      />
+      <Actions 
+        updateLoading={updateLoading}
+        removeLoading={removeLoading}
+        stock={data.Product.stock}
+        handleIncreaseStock={handleIncreaseStock}
+        handleDecreaseStock={handleDecreaseStock}
+        handleRemoveProduct={handleRemoveProduct}
+      />
     </>
   )
 }
