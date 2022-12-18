@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Grid, Typography } from '@mui/material'
 import { useQuery } from '@apollo/client'
 
-import { LOAD_CATEGORIES } from 'src/graphql/queries'
+import { LOAD_CATEGORIES } from './queries'
 import CategoryListItem from './components/categoryListItem'
 
 
