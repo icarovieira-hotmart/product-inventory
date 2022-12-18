@@ -7,10 +7,11 @@ import { Box,Button, FormControl, TextField, Typography } from '@mui/material'
 import { CREATE_PRODUCT } from './queries'
 import getSchema from './schema'
 import { FormValues } from './types'
+import { LOAD_CATEGORY } from 'src/graphql/queries'
 
 const ProductForm = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
+  const { categoryId } = useParams()
 
   const schema = getSchema()
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -18,11 +19,16 @@ const ProductForm = () => {
     mode: 'onBlur'
   });
 
-  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT);
+  const [createProduct, { loading, error }] = useMutation(CREATE_PRODUCT, {
+    refetchQueries: [{
+      query: LOAD_CATEGORY,
+      variables: {
+        id: categoryId,
+      },
+    }],
+  })
 
   const onSubmit: SubmitHandler<FormValues> = async data => {
-    console.log(data)
-
     await createProduct({
       variables: {
         ...data
@@ -31,7 +37,7 @@ const ProductForm = () => {
 
     if(!error) {
       console.log('Product created')
-      navigate(`/category/${id}`)
+      navigate(`/category/${categoryId}`)
     }
   }
 
@@ -48,7 +54,7 @@ const ProductForm = () => {
         sx={{'& .MuiTextField-root': { m: 1 }}}
       >
         <FormControl fullWidth>
-          <input type="number" hidden defaultValue={id} {...register('category_id')}/>
+          <input type="number" hidden defaultValue={categoryId} {...register('category_id')}/>
           <TextField
             required
             label="Name"

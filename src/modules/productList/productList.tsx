@@ -14,11 +14,11 @@ import { LOAD_CATEGORY } from 'src/graphql/queries'
 
 const ProductList = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
+  const { categoryId } = useParams()
 
   const { error, loading, data } = useQuery(LOAD_CATEGORY, {
     variables: {
-      id: id
+      id: categoryId
     }
   })
   const [products, setProducts] = useState<any[]>([])
@@ -52,7 +52,7 @@ const ProductList = () => {
           <ListItem 
             disablePadding 
             key={`product-${index}`}
-            onClick={() => navigate(`/product/${product.id}`)}
+            onClick={() => navigate(`/category/${categoryId}/product/${product.id}`)}
           >
             <ListItemButton>
               <ListItemText primary={product.name}/>
@@ -66,7 +66,7 @@ const ProductList = () => {
       <Button 
         sx={{ mt: 2 }}
         variant="contained"
-        onClick={() => navigate(`/category/${id}/product/add`)}
+        onClick={() => navigate(`/category/${categoryId}/product/add`)}
       >
         Add Product
       </Button>

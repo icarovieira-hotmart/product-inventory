@@ -1,6 +1,6 @@
 export const RouteNames = {
   ROOT: '/',
-  CATEGORY: '/category/:id',
-  CATEGORY_PRODUCT_ADD: '/category/:id/product/add',
-  PRODUCT: '/product/:id'
+  CATEGORY: '/category/:categoryId',
+  CATEGORY_PRODUCT_ADD: '/category/:categoryId/product/add',
+  PRODUCT: 'category/:categoryId/product/:productId'
 }

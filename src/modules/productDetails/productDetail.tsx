@@ -4,23 +4,38 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { Button, IconButton, Stack, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 
+import { LOAD_CATEGORY } from 'src/graphql/queries'
 import { LOAD_PRODUCT_DETAILS } from './queries'
 import { UPDATE_PRODUCT, REMOVE_PRODUCT } from './mutations'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
-  const { id } = useParams()
+  const { categoryId, productId } = useParams()
 
   const { error, loading, data, refetch } = useQuery(LOAD_PRODUCT_DETAILS, {
     variables: {
-      id: id
+      id: productId
     }
   })
 
-  const [updateProduct, { loading: updateLoading }] = useMutation(UPDATE_PRODUCT)
-  const [removeProduct, { loading: removeLoading }] = useMutation(REMOVE_PRODUCT)
+  const [updateProduct, { loading: updateLoading }] = useMutation(UPDATE_PRODUCT, {
+    refetchQueries: [{
+      query: LOAD_CATEGORY,
+      variables: {
+        id: categoryId,
+      },
+    }],
+  })
+  const [removeProduct, { loading: removeLoading }] = useMutation(REMOVE_PRODUCT, {
+    refetchQueries: [{
+      query: LOAD_CATEGORY,
+      variables: {
+        id: categoryId,
+      },
+    }],
+  })
 
   useEffect(() => {
     console.log(data)
@@ -28,7 +43,7 @@ const ProductDetail = () => {
 
   const handleIncreaseStock = async () => {
     await updateProduct({
-      variables: { updateProductId: id, stock: data.Product.stock + 1 },
+      variables: { updateProductId: productId, stock: data.Product.stock + 1 },
     })
 
     refetch()
@@ -37,7 +52,7 @@ const ProductDetail = () => {
   const handleDecreaseStock = async () => {
     if(data.Product.stock !== 0) {
       await updateProduct({
-        variables: { updateProductId: id, stock: data.Product.stock - 1 },
+        variables: { updateProductId: productId, stock: data.Product.stock - 1 },
       })
   
       refetch()
@@ -47,7 +62,7 @@ const ProductDetail = () => {
   }
 
   const handleRemoveProduct = async () => {
-    await removeProduct({ variables: { removeProductId: id }})
+    await removeProduct({ variables: { removeProductId: productId }})
     
     navigate(`/category/${data.Product.category_id}`)
   }
