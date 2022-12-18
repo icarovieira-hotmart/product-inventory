@@ -1,26 +1,56 @@
 import { useEffect } from "react"
+import { useMutation } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { IconButton, Stack, Typography } from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
-import { LOAD_PRODUCT_DETAILS } from 'src/graphql/queries'
-
+import { LOAD_PRODUCT_DETAILS } from './queries'
+import { UPDATE_PRODUCT, REMOVE_PRODUCT } from './mutations'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const { error, loading, data } = useQuery(LOAD_PRODUCT_DETAILS, {
+  const { error, loading, data, refetch } = useQuery(LOAD_PRODUCT_DETAILS, {
     variables: {
       id: id
     }
   })
 
+  const [updateProduct, { loading: updateLoading }] = useMutation(UPDATE_PRODUCT)
+  const [removeProduct, { loading: removeLoading }] = useMutation(REMOVE_PRODUCT)
+
   useEffect(() => {
     console.log(data)
-  }, [data]);
+  }, [data])
+
+  const handleIncreaseStock = async () => {
+    await updateProduct({
+      variables: { updateProductId: id, stock: data.Product.stock + 1 },
+    })
+
+    refetch()
+  }
+
+  const handleDecreaseStock = async () => {
+    if(data.Product.stock !== 0) {
+      await updateProduct({
+        variables: { updateProductId: id, stock: data.Product.stock - 1 },
+      })
+  
+      refetch()
+    } else {
+      console.log('Stock cant be less than zero')
+    }
+  }
+
+  const handleRemoveProduct = async () => {
+    await removeProduct({ variables: { removeProductId: id }})
+    
+    navigate(`/category/${data.Product.category_id}`)
+  }
 
   if(error){
     return <>Sorry, There was an error to fetch data</>
@@ -47,15 +77,37 @@ const ProductDetail = () => {
       </Typography>
 
       <Stack direction="row" spacing={2}>
-        <IconButton color="primary" aria-label="increase" component="label">
+        <IconButton 
+          aria-label="increase"
+          color="primary"
+          component="label"
+          onClick={() => handleIncreaseStock()}
+        >
           <AddCircleOutlineIcon />
         </IconButton>
+
         <Typography sx={{ textAlign: 'left'}} variant="overline">
-          Stock: {data.Product.stock}
+          Stock: {updateLoading ? 'Loading...' : data.Product.stock}
         </Typography>
-        <IconButton color="primary" aria-label="decrease" component="label">
+
+        <IconButton
+          aria-label="decrease"
+          color="primary"
+          component="label"
+          onClick={() => handleDecreaseStock()}
+        >
           <RemoveCircleOutlineIcon />
         </IconButton>
+
+        <Button
+          sx={{ mt: 2 }}
+          disabled={removeLoading}
+          variant="contained"
+          color="error"
+          onClick={() => handleRemoveProduct()}
+        >
+          {removeLoading ? 'Loading...' : 'Remove'}
+        </Button>
       </Stack>
     </>
   )
