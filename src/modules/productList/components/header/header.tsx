@@ -1,4 +1,6 @@
-import { Typography} from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { IconButton, Stack, Typography } from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 interface IProps {
   name: string,
@@ -6,15 +8,26 @@ interface IProps {
 }
 
 const Header = ({ name, description }: IProps) => {
+  const navigate = useNavigate()
   return (
     <>
-      <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
-        Category: {name}
-      </Typography>
+      <Stack sx={{ marginTop: 4}} direction="row" spacing={2} justifyContent="center">
+        <IconButton
+          aria-label="back"
+          color="primary"
+          component="label"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
+          Category: {name}
+        </Typography>
+      </Stack>
       <Typography sx={{ mt: 5 }} variant="body1" gutterBottom>
-        {description}
-      </Typography>
-    </>
+      {description}
+    </Typography>
+  </>
   )
 }
 

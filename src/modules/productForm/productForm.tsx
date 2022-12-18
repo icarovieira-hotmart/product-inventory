@@ -2,7 +2,16 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Box,Button, FormControl, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  Stack,
+  TextField,
+  Typography 
+} from '@mui/material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import { CREATE_PRODUCT } from './queries'
 import getSchema from './schema'
@@ -43,9 +52,19 @@ const ProductForm = () => {
 
   return (
     <>
-      <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
-        Add Product
-      </Typography>
+      <Stack sx={{ marginTop: 4}} direction="row" spacing={2} justifyContent="center">
+        <IconButton
+          aria-label="back"
+          color="primary"
+          component="label"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography sx={{ mt: 5 }} variant="h4" gutterBottom>
+          Add Product
+        </Typography>
+      </Stack>
       <Box 
         component="form" 
         noValidate 

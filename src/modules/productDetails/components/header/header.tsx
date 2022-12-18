@@ -11,7 +11,12 @@ const Header = ({name}: IProps) => {
   const navigate = useNavigate()
 
   return (
-    <Stack sx={{ marginTop: 4}} direction="row" spacing={2}>
+    <Stack
+      sx={{ marginTop: 4, marginBottom: 4}}
+      direction="row"
+      spacing={2}
+      justifyContent="center"
+    >
       <IconButton
         aria-label="back"
         color="primary"
