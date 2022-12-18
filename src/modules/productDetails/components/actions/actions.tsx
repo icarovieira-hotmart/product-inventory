@@ -6,8 +6,8 @@ interface IProps {
   updateLoading: boolean,
   removeLoading: boolean,
   stock: number,
-  handleIncreaseStock: () => void,
-  handleDecreaseStock: () => void,
+  handleIncreaseStock: (stock: number) => void,
+  handleDecreaseStock: (stock: number) => void,
   handleRemoveProduct: () => void
 }
 
@@ -25,7 +25,7 @@ const Actions = ({
         aria-label="increase"
         color="primary"
         component="label"
-        onClick={() => handleIncreaseStock()}
+        onClick={() => handleIncreaseStock(stock)}
       >
         <AddCircleOutlineIcon />
       </IconButton>
@@ -39,7 +39,7 @@ const Actions = ({
         color="primary"
         disabled={stock === 0}
         component="label"
-        onClick={() => handleDecreaseStock()}
+        onClick={() => handleDecreaseStock(stock)}
       >
         <RemoveCircleOutlineIcon />
       </IconButton>

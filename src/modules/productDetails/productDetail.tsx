@@ -1,31 +1,34 @@
+import { useEffect, useState } from "react";
 import { useMutation } from '@apollo/client'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
-import { LOAD_CATEGORY } from 'src/graphql/queries'
-import { LOAD_PRODUCT_DETAILS } from './queries'
-import { UPDATE_PRODUCT, REMOVE_PRODUCT } from './mutations'
+import { Product } from 'src/graphql/types'
+import { LOAD_CATEGORY, LOAD_PRODUCT_DETAILS } from 'src/graphql/queries'
+import { UPDATE_PRODUCT, REMOVE_PRODUCT } from 'src/graphql/mutations'
 import { Header, Info, Actions } from './components'
 
 const ProductDetail = () => {
+  const [product, setProduct] = useState<Product>();
   const navigate = useNavigate()
   const { categoryId, productId } = useParams()
-
-  const { error, loading, data, refetch } = useQuery(LOAD_PRODUCT_DETAILS, {
+  const { error, loading, data, refetch } = useQuery<{
+    Product: Product
+  }>(LOAD_PRODUCT_DETAILS, {
     variables: {
       id: productId
     }
   })
 
-  const [updateProduct, { loading: updateLoading }] = useMutation(UPDATE_PRODUCT, {
-    refetchQueries: [{
-      query: LOAD_CATEGORY,
-      variables: {
-        id: categoryId,
-      },
-    }],
-  })
-  const [removeProduct, { loading: removeLoading }] = useMutation(REMOVE_PRODUCT, {
+  useEffect(() => {
+    if (data) {
+      setProduct(data.Product);
+    }
+  }, [data])
+
+  const [updateProduct, { 
+    loading: updateLoading
+  }] = useMutation(UPDATE_PRODUCT, {
     refetchQueries: [{
       query: LOAD_CATEGORY,
       variables: {
@@ -34,64 +37,80 @@ const ProductDetail = () => {
     }],
   })
 
-  const handleIncreaseStock = async () => {
+  const [removeProduct, {
+    loading: removeLoading
+  }] = useMutation(REMOVE_PRODUCT, {
+    refetchQueries: [{
+      query: LOAD_CATEGORY,
+      variables: {
+        id: categoryId,
+      },
+    }],
+  })
+
+  const handleIncreaseStock = async (stock: number) => {
     await updateProduct({
       variables: {
         updateProductId: productId,
-        stock: data.Product.stock + 1 
+        stock: stock + 1 
       },
     })
-
     refetch()
   }
 
-  const handleDecreaseStock = async () => {
-    if(data.Product.stock !== 0) {
+  const handleDecreaseStock = async (stock: number) => {
+    if(stock !== 0) {
       await updateProduct({
         variables: {
           updateProductId: productId,
-          stock: data.Product.stock - 1
+          stock: stock - 1
         },
       })
-  
       refetch()
-    } else {
-      console.log('Stock cant be less than zero')
     }
   }
 
   const handleRemoveProduct = async () => {
-    await removeProduct({ variables: { removeProductId: productId }})
+    await removeProduct({ variables: {
+       removeProductId: productId 
+    }})
     
-    navigate(`/category/${data.Product.category_id}`)
+    navigate(`/category/${product?.category_id}`)
   }
 
-  if(error){
+  if (error) {
     return <>Sorry, There was an error to fetch data</>
   }
 
-  if(loading){
+  if (loading) {
     return <>Loading...</>
   }
 
+  if (product) {
+    const { name, description, color, price, stock } = product
+
+    return (
+      <>
+        <Header name={name}/>
+        <Info
+          description={description}
+          color={color}
+          price={price}
+        />
+        <Actions 
+          updateLoading={updateLoading}
+          removeLoading={removeLoading}
+          stock={stock}
+          handleIncreaseStock={handleIncreaseStock}
+          handleDecreaseStock={handleDecreaseStock}
+          handleRemoveProduct={handleRemoveProduct}
+        />
+      </>
+    )
+  }
 
   return (
-    <>
-      <Header name={data.Product.name}/>
-      <Info
-        description={data.Product.description}
-        color={data.Product.color}
-        price={data.Product.price}
-      />
-      <Actions 
-        updateLoading={updateLoading}
-        removeLoading={removeLoading}
-        stock={data.Product.stock}
-        handleIncreaseStock={handleIncreaseStock}
-        handleDecreaseStock={handleDecreaseStock}
-        handleRemoveProduct={handleRemoveProduct}
-      />
-    </>
+    <>Nothing to be displayed...</>
   )
 }
 

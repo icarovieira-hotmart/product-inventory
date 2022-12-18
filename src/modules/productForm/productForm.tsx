@@ -17,6 +17,7 @@ import { CREATE_PRODUCT } from './queries'
 import getSchema from './schema'
 import { FormValues } from './types'
 import { LOAD_CATEGORY } from 'src/graphql/queries'
+import { Product } from 'src/graphql/types'
 
 const ProductForm = () => {
   const navigate = useNavigate()
@@ -30,7 +31,7 @@ const ProductForm = () => {
 
   const [createProduct, { 
     loading, error 
-  }] = useMutation(CREATE_PRODUCT, {
+  }] = useMutation<Product>(CREATE_PRODUCT, {
     refetchQueries: [{
       query: LOAD_CATEGORY,
       variables: {
@@ -49,6 +50,10 @@ const ProductForm = () => {
     if(!error) {
       navigate(`/category/${categoryId}`)
     }
+  }
+
+  if(loading) {
+    return <>Submitting...</>
   }
 
   return (
@@ -74,7 +79,12 @@ const ProductForm = () => {
         sx={{'& .MuiTextField-root': { m: 1 }}}
       >
         <FormControl fullWidth>
-          <input type="number" hidden defaultValue={categoryId} {...register('category_id')}/>
+          <input
+            type="number"
+            hidden
+            defaultValue={categoryId}
+            {...register('category_id')}
+          />
           <TextField
             required
             label="Name"
