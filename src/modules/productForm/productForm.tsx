@@ -13,11 +13,11 @@ import {
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-import { CREATE_PRODUCT } from './queries'
-import getSchema from './schema'
-import { FormValues } from './types'
+import { CREATE_PRODUCT } from 'src/graphql/mutations'
 import { LOAD_CATEGORY } from 'src/graphql/queries'
 import { Product } from 'src/graphql/types'
+import getSchema from './schema'
+import { FormValues } from './types'
 
 const ProductForm = () => {
   const navigate = useNavigate()

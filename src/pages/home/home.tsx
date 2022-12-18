@@ -1,11 +1,7 @@
-import CategoryList from '../../modules/categoryList';
+import CategoryList from 'src/modules/categoryList';
 
 const Home = () => {
-  return (
-    <>
-      <CategoryList />
-    </>
-  )
+  return <CategoryList />
 }
 
 export default Home
