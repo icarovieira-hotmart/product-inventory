@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+
 # Product Inventory App
 Product Inventory is an app to manage inventory of products organized by categories, and contains the following features:
 - list of all categories available
@@ -35,6 +37,7 @@ yarn start
 - [Yup](https://github.com/jquense/yup)
 - [React Hook Form](https://react-hook-form.com/)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
+- [Material UI](https://mui.com/)
 
 ## Folder Structure
 - public -> Static files as index.html, favicon, etc.
@@ -46,6 +49,7 @@ yarn start
       - components -> All components directly related to that module
       - constants -> All constatns directly related to that module
       - types -> All types related to that module
+      - test -> Test for the module
     - routes -> The routes used by the app
     - pages -> Pages that the app content are distributed
 
