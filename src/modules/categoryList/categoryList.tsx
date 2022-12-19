@@ -1,32 +1,13 @@
-
-import { useEffect, useState } from "react"
 import { Grid, Typography } from '@mui/material'
-import { useQuery } from '@apollo/client'
 
 import { Category } from 'src/graphql/types'
-import { LOAD_CATEGORIES } from 'src/graphql/queries'
 import CategoryListItem from './components/categoryListItem'
 
-const CategoryList = () => {
-  const [categories, setCategories] = useState<Category[]>([])
-  const { error, loading, data } = useQuery<{
-    allCategories: Category[]
-  }>(LOAD_CATEGORIES)
+interface IProps {
+  categories: Omit<Category, 'Products'>[]
+}
 
-  useEffect(() => {
-    if (data) {
-      setCategories(data.allCategories)
-    }
-  }, [data]);
-
-  if(error){
-    return <>Sorry, There was an error to fetch data</>
-  }
-
-  if(loading){
-    return <>Loading...</>
-  }
-
+const CategoryList = ({ categories }: IProps) => {
   return (
     <>
      <Typography sx={{ mt: 5 }} variant="h2" gutterBottom>
