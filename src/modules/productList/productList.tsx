@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
 import { 
   Button,
   Divider,
@@ -9,39 +7,24 @@ import {
   ListItemButton,
   ListItemText } from '@mui/material'
 
-import { LOAD_CATEGORY } from 'src/graphql/queries'
+import { Product } from 'src/graphql/types'
 import Header from './components/header'
 
-const ProductList = () => {
+interface IProps {
+  name: string,
+  description: string,
+  products: Product[]
+}
+
+const ProductList = ({ products, name, description }:IProps) => {
   const navigate = useNavigate()
   const { categoryId } = useParams()
-
-  const { error, loading, data } = useQuery(LOAD_CATEGORY, {
-    variables: {
-      id: categoryId
-    }
-  })
-
-  const [products, setProducts] = useState<any[]>([])
-  useEffect(() => {
-    if (data) {
-      setProducts(data.Category.Products)
-    }
-  }, [data]);
-
-  if(error){
-    return <>Sorry, There was an error to fetch data</>
-  }
-
-  if(loading){
-    return <>Loading...</>
-  }
 
   return (
     <>
       <Header
-        name={data.Category.name}
-        description={data.Category.description}
+        name={name}
+        description={description}
       />
 
       <Divider sx={{ mt: 2 }} />
@@ -51,7 +34,9 @@ const ProductList = () => {
           <ListItem 
             disablePadding 
             key={`product-${index}`}
-            onClick={() => navigate(`/category/${categoryId}/product/${product.id}`)}
+            onClick={
+              () => navigate(`/category/${categoryId}/product/${product.id}`)
+            }
           >
             <ListItemButton>
               <ListItemText primary={product.name}/>
