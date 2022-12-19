@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/product-inventory/static/css/main.1ef3a49a.css",
+    "main.js": "/product-inventory/static/js/main.670891f5.js",
+    "static/js/413.810b2751.chunk.js": "/product-inventory/static/js/413.810b2751.chunk.js",
+    "static/js/189.3a4f05d0.chunk.js": "/product-inventory/static/js/189.3a4f05d0.chunk.js",
+    "static/js/991.834d9b40.chunk.js": "/product-inventory/static/js/991.834d9b40.chunk.js",
+    "static/js/677.edea94ec.chunk.js": "/product-inventory/static/js/677.edea94ec.chunk.js",
+    "static/js/105.188834c8.chunk.js": "/product-inventory/static/js/105.188834c8.chunk.js",
+    "static/js/261.6c705d02.chunk.js": "/product-inventory/static/js/261.6c705d02.chunk.js",
+    "static/js/538.07e0eb11.chunk.js": "/product-inventory/static/js/538.07e0eb11.chunk.js",
+    "static/js/125.392d0f8b.chunk.js": "/product-inventory/static/js/125.392d0f8b.chunk.js",
+    "static/js/774.77722764.chunk.js": "/product-inventory/static/js/774.77722764.chunk.js",
+    "static/js/632.dc0b5319.chunk.js": "/product-inventory/static/js/632.dc0b5319.chunk.js",
+    "index.html": "/product-inventory/index.html",
+    "main.1ef3a49a.css.map": "/product-inventory/static/css/main.1ef3a49a.css.map",
+    "main.670891f5.js.map": "/product-inventory/static/js/main.670891f5.js.map",
+    "413.810b2751.chunk.js.map": "/product-inventory/static/js/413.810b2751.chunk.js.map",
+    "189.3a4f05d0.chunk.js.map": "/product-inventory/static/js/189.3a4f05d0.chunk.js.map",
+    "991.834d9b40.chunk.js.map": "/product-inventory/static/js/991.834d9b40.chunk.js.map",
+    "677.edea94ec.chunk.js.map": "/product-inventory/static/js/677.edea94ec.chunk.js.map",
+    "105.188834c8.chunk.js.map": "/product-inventory/static/js/105.188834c8.chunk.js.map",
+    "261.6c705d02.chunk.js.map": "/product-inventory/static/js/261.6c705d02.chunk.js.map",
+    "538.07e0eb11.chunk.js.map": "/product-inventory/static/js/538.07e0eb11.chunk.js.map",
+    "125.392d0f8b.chunk.js.map": "/product-inventory/static/js/125.392d0f8b.chunk.js.map",
+    "774.77722764.chunk.js.map": "/product-inventory/static/js/774.77722764.chunk.js.map",
+    "632.dc0b5319.chunk.js.map": "/product-inventory/static/js/632.dc0b5319.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ef3a49a.css",
+    "static/js/main.670891f5.js"
+  ]
+}

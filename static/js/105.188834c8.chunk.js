@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkproduct_inventory=self.webpackChunkproduct_inventory||[]).push([[105],{9105:function(n,r,t){t.r(r),t.d(r,{default:function(){return e}});var u=t(184),e=function(){return(0,u.jsx)(u.Fragment,{children:"Sorry, Not Found"})}}}]);
+//# sourceMappingURL=105.188834c8.chunk.js.map
