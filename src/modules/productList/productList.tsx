@@ -5,7 +5,8 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText } from '@mui/material'
+  ListItemText
+} from '@mui/material'
 
 import { Product } from 'src/graphql/types'
 import Header from './components/header'

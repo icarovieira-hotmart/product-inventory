@@ -1,12 +1,12 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import React, { Suspense } from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from "react-router-dom"
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
-import App from './App';
-import Loading from './components/loading';
+import App from './App'
+import Loading from './components/loading'
 
-import './index.css';
+import './index.css'
 
 const client = new ApolloClient({
   uri: 'https://icaro-sample-shop.up.railway.app/graphql',

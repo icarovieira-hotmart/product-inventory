@@ -1,17 +1,15 @@
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import RoutesApp from './routes/routes';
-
-import './App.css';
+import RoutesApp from './routes/routes'
 
 function App() {
   return (
     <div className="App">
-      <Container maxWidth="md">
+      <Container sx={{ textAlign: 'center' }} maxWidth="md">
         <RoutesApp />
       </Container>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
