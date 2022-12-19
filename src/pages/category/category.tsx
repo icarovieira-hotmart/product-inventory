@@ -33,7 +33,7 @@ const Category = () => {
     <ProductList
       products={products}
       name={data.Category.name}
-      description={data.Category.name}
+      description={data.Category.description}
     />
   )
 }
